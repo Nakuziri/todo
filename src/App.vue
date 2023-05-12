@@ -4,9 +4,11 @@ import {ref} from 'vue'
 let todos = ref([])
 let NewTodos = ref('')
 
-function AddTodo () {
-  todos.value.push(NewTodos.value)
-
+function AddTodo () { 
+  todos.value.push({
+    text: NewTodos.value,
+    complete: false
+  })
   NewTodos.value = ''
 }
 
@@ -21,7 +23,11 @@ function DeleteTodos (index) {
 <h1>My Todo Application</h1>
 
 <ul>
-<li v-for="(todo, index) in todos"><button @click="DeleteTodos">🚮</button>{{ todo }}</li>
+<li v-for="(todo, index) in todos">
+  <input type="checkbox" v-model="todo.complete">
+  <button @click="DeleteTodos">🚮</button>
+  {{ todo.text }}
+</li>
 </ul>
 
 <input v-model="NewTodos" @keydown.enter="AddTodo">
