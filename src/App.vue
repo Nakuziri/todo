@@ -1,7 +1,7 @@
 <script setup>
 import {ref, watch} from 'vue'
 
-let todos = ref(JSON.parse(window.localStorage.getItem('todos')))
+let todos = ref(JSON.parse(window.localStorage.getItem('todos')) ?? [])
 let NewTodos = ref('')
 let input = ref ('')
 
@@ -10,17 +10,19 @@ watch(todos, function(value) {
 }, {deep: true})
 
 function AddTodo () { 
-  todos.value.push({
+
+  if (NewTodos.value != '') {
+    todos.value.push({
     text: NewTodos.value,
     complete: false
   })
   NewTodos.value = ''
+  } 
 }
 
 
 function DeleteTodos (index) {
     todos.value.splice(index, 1)
-
   }
 </script>
 
@@ -30,8 +32,8 @@ function DeleteTodos (index) {
 <h1>My Todo Application</h1>
 
 <ul>
-<li v-for="(todo, index) in todos">
-  <input class="checkbox" type="checkbox" v-model="todo.complete">
+<li v-for="(todo, index) in todos" :class= "{completed: todo.complete}">
+  <input class="checkbox" type="checkbox" v-model="todo.complete" >
   <button @click="DeleteTodos(index)">🚮</button>
   {{ todo.text }}
 </li>
@@ -45,6 +47,11 @@ function DeleteTodos (index) {
 
 
 <style>
+.completed {
+  text-decoration: line-through;
+  color: #c2c2c2;
+}
+
 body{
 background-color: blanchedalmond;
 max-width: 600px;
@@ -53,4 +60,6 @@ margin: auto;
 .checkbox:hover{
 color: blueviolet;
 }
+
+
 </style>
