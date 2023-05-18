@@ -10,6 +10,7 @@ watch(todos, function(value) {
   window.localStorage.setItem('todos',JSON.stringify(value))
 }, {deep: true})
 
+
 function AddTodo () { 
 
   if (NewTodos.value != '') {
@@ -37,6 +38,11 @@ function todoFilter (todo) {
   }
   
 }
+
+function activeFilter (todo) {
+  return todo.complete == false
+}
+
 </script>
 
 
@@ -55,17 +61,18 @@ function todoFilter (todo) {
  <label>Complete</label>
 </p>
 
-
+<p>{{ todos.filter(activeFilter).length }} items left</p>
+<input id="todoInput" v-model="NewTodos" placeholder="Press enter to add todo" @keydown.enter="AddTodo">
 <ul>
 <li v-for="(todo, index) in todos.filter(todoFilter)" :class= "{completed: todo.complete}">
   <input class="checkbox" type="checkbox" v-model="todo.complete" >
-  <button @click="DeleteTodos(index)">🚮</button>
   {{ todo.text }}
+  <button @click="DeleteTodos(index)">🚮</button>
 </li>
 </ul>
 
-<input v-model="NewTodos" @keydown.enter="AddTodo">
-<button @click="AddTodo">Add Todo</button>
+
+
 
 </body>
 </template>
@@ -77,17 +84,33 @@ function todoFilter (todo) {
 <style>
 .completed {
   text-decoration: line-through;
-  color: #c2c2c2;
+  color: #E7CBCB;
 }
 
 body{
-background-color: blanchedalmond;
-max-width: 600px;
+background-color: #99627A;
+max-width: 800px;
 margin: auto;
-}
-.checkbox:hover{
-color: blueviolet;
+text-align: center;
 }
 
+li {
+  background-color: #643843;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 5px;
+  text-align: left;
+}
+
+#todoInput {
+ padding: 15px;
+ border-radius: 20px;
+}
+
+li:hover > button {
+  display:flex;
+}
+button {text-align: right;
+}
 
 </style>
