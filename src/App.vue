@@ -63,9 +63,10 @@ function activeFilter (todo) {
 
 <p>{{ todos.filter(activeFilter).length }} items left</p>
 <input id="todoInput" v-model="NewTodos" placeholder="Press enter to add todo" @keydown.enter="AddTodo">
+
 <ul>
 <li v-for="(todo, index) in todos.filter(todoFilter)" :class= "{completed: todo.complete}">
-  <input class="checkbox" type="checkbox" v-model="todo.complete" >
+  <input id="check" type="checkbox" v-model="todo.complete" >
   {{ todo.text }}
   <button @click="DeleteTodos(index)">🚮</button>
 </li>
@@ -92,6 +93,10 @@ background-color: #99627A;
 max-width: 800px;
 margin: auto;
 text-align: center;
+padding: 0;
+margin: 0;
+color: white;
+
 }
 
 li {
@@ -105,12 +110,47 @@ li {
 #todoInput {
  padding: 15px;
  border-radius: 20px;
+ background-color: #643843;
+ color: white;
 }
 
-li:hover > button {
-  display:flex;
+button {
+  text-align: right;
 }
-button {text-align: right;
+
+input[type='checkbox']{
+  appearance: none;
+  -webkit-appearance: none;
+  height: 23px;
+  width: 23px;
+  background-color: #d5d5d5;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+input[type='checkbox']:after{
+  font-family: "Font Awesome 5 Free";
+  font-weight:600;
+  content: "\f00c";
+  font-size: 15px;
+  color: white;
+  display: none;
+}
+
+input[type='checkbox']:hover{
+  background-color: #a5a5a5;
+}
+
+input[type='checkbox']:checked{
+  background-color: #E7CBCB;
+}
+
+input[type='checkbox']:checked::after{
+  display: block;
 }
 
 </style>
