@@ -47,8 +47,10 @@ function activeFilter (todo) {
 
 
 <template>
+
   <body>
-<h1>My Todo Application</h1>
+
+<h1>My To-do Application</h1>
 
 <p v-if="todos.length > 0">
  <input name="filter" type="radio" value="all" v-model="filter">
@@ -64,16 +66,13 @@ function activeFilter (todo) {
 <p>{{ todos.filter(activeFilter).length }} items left</p>
 <input id="todoInput" v-model="NewTodos" placeholder="Press enter to add todo" @keydown.enter="AddTodo">
 
-<ul>
+<div>
 <li v-for="(todo, index) in todos.filter(todoFilter)" :class= "{completed: todo.complete}">
   <input id="check" type="checkbox" v-model="todo.complete" >
   {{ todo.text }}
-  <button @click="DeleteTodos(index)">🚮</button>
+  <button id="button" @click="DeleteTodos(index)">🚮</button>
 </li>
-</ul>
-
-
-
+</div>
 
 </body>
 </template>
@@ -114,8 +113,10 @@ li {
  color: white;
 }
 
-button {
+#button {
   text-align: right;
+  height: 25px;
+  width: 35px;
 }
 
 input[type='checkbox']{
@@ -149,7 +150,7 @@ input[type='checkbox']:checked{
   background-color: #E7CBCB;
 }
 
-input[type='checkbox']:checked::after{
+input[type='checkbox']:checked:after{
   display: block;
 }
 
